@@ -4,11 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import { createStore } from "redux";
-import { Provider } from "react-redux";
+import { applyMiddleware, legacy_createStore as createStore } from "redux";
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { myReducer } from './reducers';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 
-const depo = createStore(myReducer);
+const depo = createStore(
+  myReducer, 
+  composeWithDevTools(applyMiddleware(thunk, logger)));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
